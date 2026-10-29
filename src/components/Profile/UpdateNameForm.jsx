@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import FormField from "@/components/auth/FormField";
-import { updateUser } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client"; // authClient ব্যবহার করা হয়েছে
 import { authErrorMessage } from "@/lib/auth-errors";
 
 export default function UpdateNameForm({ currentName }) {
@@ -28,17 +28,22 @@ export default function UpdateNameForm({ currentName }) {
     }
     setError(undefined);
     setLoading(true);
-    // BetterAuth: https://better-auth.com/docs/concepts/users-accounts#update-user
-    const { error } = await updateUser({ name: trimmed });
+
+    // Better Auth client দিয়ে ইউজার আপডেট করার সঠিক পদ্ধতি
+    const { error } = await authClient.updateUser({
+      name: trimmed,
+    });
+    
     setLoading(false);
 
     if (error) {
-      toast.error(authErrorMessage(error));
+      toast.error(authErrorMessage(error) || "নাম আপডেট করতে সমস্যা হয়েছে।");
       return;
     }
+    
     toast.success("তথ্য সফলভাবে আপডেট হয়েছে!");
     router.replace("/profile");
-    router.refresh(); // re-render navbar + profile with the new name
+    router.refresh(); // নববার ও প্রোফাইল পেজ আপডেট করার জন্য
   }
 
   return (

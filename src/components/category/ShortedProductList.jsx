@@ -29,25 +29,26 @@ export default function SortedProductList({ products }) {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-end gap-2 rounded-2xl border border-base-300 bg-base-100 p-4">
-        <label htmlFor="sort" className="text-sm">
-          সাজান
-        </label>
-        <select
-          id="sort"
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          className="select select-sm w-auto rounded-lg text-xs"
-        >
-          {OPTIONS.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+      {/* ফ্লেক্স বক্স ব্যবহার করে "সাজান" এবং ড্রপডাউনটি একই লাইনে (horizontal line) রাখা হয়েছে */}
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-base-300 bg-base-100 p-4">
+        <p className="text-sm text-base-content/70">মোট {toBn(products.length)}টি পণ্য দেখানো হচ্ছে</p>
+        
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">সাজান</span>
+          <select
+            id="sort"
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+            className="select select-sm select-bordered rounded-lg text-xs"
+          >
+            {OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
-
-      <p className="text-sm text-base-content/70">মোট {toBn(products.length)}টি পণ্য দেখানো হচ্ছে</p>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {sorted.map((p) => (

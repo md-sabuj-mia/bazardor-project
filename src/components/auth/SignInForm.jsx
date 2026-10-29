@@ -42,19 +42,33 @@ export default function SignInForm() {
     }
 
     setLoading(true);
-    const { error } = await signIn.email({ email, password });
-    setLoading(false);
 
-    if (error) {
-      toast.error(authErrorMessage(error));
-      return;
+    try {
+      // Better Auth সাইন-ইন রিকোয়েস্ট
+      const { data, error } = await signIn.email({
+        email,
+        password,
+        callbackURL: redirectTo,
+      });
+
+      if (error) {
+        setLoading(false);
+        toast.error(authErrorMessage(error) || "সাইন ইন করতে সমস্যা হয়েছে। সঠিক ইমেইল ও পাসওয়ার্ড দিন।");
+        return;
+      }
+
+      toast.success("সফলভাবে সাইন ইন হয়েছে!");
+      
+      // Full page load to ensure cookies are properly recognized
+      setTimeout(() => {
+        window.location.assign(redirectTo || "/");
+      }, 700);
+
+    } catch (err) {
+      setLoading(false);
+      console.error("Sign in error:", err);
+      toast.error("কোথাও কোনো ত্রুটি ঘটেছে। আবার চেষ্টা করুন।");
     }
-    toast.success("সফলভাবে সাইন ইন হয়েছে!");
-    // Full page load (not router.push): the router may still hold the earlier
-    // "redirect to /signin" response for a protected page, which would bounce
-    // the user straight back here. A real navigation re-checks with the new cookie.
-    setLoading(true); // keep the button disabled while we leave the page
-    setTimeout(() => window.location.assign(redirectTo), 700); // let the toast be seen
   }
 
   return (

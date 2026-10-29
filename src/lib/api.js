@@ -1,5 +1,3 @@
-import { cacheLife } from "next/cache";
-
 const BASE_URLS = [
   "https://openapi.programming-hero.com/api/bazardor",
   "https://api.api-store.workers.dev/api/bazardor",
@@ -10,7 +8,10 @@ const BASE_URLS = [
 async function fetchJson(path) {
   for (const base of BASE_URLS) {
     try {
-      const res = await fetch(`${base}${path}`);
+      // এখানে next: { revalidate: 3600 } যোগ করা হয়েছে যাতে Next.js ক্যাশ করতে পারে
+      const res = await fetch(`${base}${path}`, {
+        next: { revalidate: 3600 },
+      });
       if (res.status === 404) return null;
       if (res.ok) {
         const json = await res.json();
@@ -24,20 +25,14 @@ async function fetchJson(path) {
 }
 
 export async function getProducts() {
-  "use cache";
-  cacheLife("hours");
   return (await fetchJson("/products")) ?? [];
 }
 
 export async function getCategories() {
-  "use cache";
-  cacheLife("hours");
   return (await fetchJson("/categories")) ?? [];
 }
 
 export async function getProductsByCategory(slug) {
-  "use cache";
-  cacheLife("hours");
   return (
     (await fetchJson(`/products?category=${encodeURIComponent(slug)}`)) ?? []
   );
