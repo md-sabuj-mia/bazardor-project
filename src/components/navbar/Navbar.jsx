@@ -6,14 +6,23 @@ import BanglaDate from "./BanglaDate";
 import CategoryLinks from "./CategoryLinks";
 import CategoryNav from "./CategoryNav";
 
-export default async function Navbar() {
+// ক্যাটাগরি লোড করার জন্য আলাদা একটি ছোট অ্যাসিন্ড কম্পোনেন্ট
+async function CategoriesContainer() {
   let categories = [];
   try {
     categories = await getCategories();
   } catch {
-    // API unavailable — show the navbar without category links
+    // API unavailable — fallback array থাকবে
   }
 
+  return (
+    <Suspense fallback={<CategoryLinks categories={[]} activeHref={null} />}>
+      <CategoryNav categories={categories} />
+    </Suspense>
+  );
+}
+
+export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-base-300 bg-base-100/95 backdrop-blur">
       <div className="mx-auto flex h-[68px] max-w-6xl items-center justify-between gap-3 px-4">
@@ -27,13 +36,13 @@ export default async function Navbar() {
           </span>
         </Link>
 
+        {/* অথেন্টিকেশন বাটনগুলো যেন কোনো ব্লকিং ছাড়া ইনস্ট্যান্ট লোড হয় */}
         <AuthButtons />
       </div>
 
-      {/* usePathname() needs a Suspense boundary in Next 16; the fallback is the
-          same chip row without the active highlight */}
-      <Suspense fallback={<CategoryLinks categories={categories} activeHref={null} />}>
-        <CategoryNav categories={categories} />
+      {/* ক্যাটাগরি নেভবার অংশটি আলাদা সাসপেন্সের ভেতর রাখা হলো */}
+      <Suspense fallback={<div className="h-10 w-full bg-base-100/50" />}>
+        <CategoriesContainer />
       </Suspense>
     </header>
   );

@@ -6,6 +6,7 @@ import PriceMovers from "@/components/home/PriceMovers";
 import { ProductGridSkeleton } from "@/components/product/ProductCardSkeleton";
 import { getProducts } from "@/lib/api";
 import { topFallers, topRisers } from "@/lib/products";
+import LoginToast from "@/components/auth/LoginToast"; // LoginToast ইমপোর্ট করা হলো
 
 async function MoversSections() {
   const products = await getProducts();
@@ -38,6 +39,9 @@ async function AllProductsSection() {
 export default function Home() {
   return (
     <div className="space-y-6 flex flex-col min-h-screen">
+      {/* লগইন সাকসেস টোস্ট নোটিফিকেশন দেখানোর কম্পোনেন্ট */}
+      <LoginToast />
+
       {/* মুভেবল বা স্ক্রোলিং প্রাইস টেকার বার */}
       <PriceTicker />
 

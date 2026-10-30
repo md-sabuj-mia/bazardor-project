@@ -1,15 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import FormField from "@/components/auth/FormField";
-import { authClient } from "@/lib/auth-client"; // authClient ব্যবহার করা হয়েছে
+import { authClient } from "@/lib/auth-client";
 import { authErrorMessage } from "@/lib/auth-errors";
 
 export default function UpdateNameForm({ currentName }) {
-  const router = useRouter();
   const [name, setName] = useState(currentName);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
@@ -23,27 +21,37 @@ export default function UpdateNameForm({ currentName }) {
       return;
     }
     if (trimmed === currentName) {
-      toast("নামে কোনো পরিবর্তন হয়নি।", { icon: "ℹ️" });
+      toast("নামে কোনো পরিবর্তন হয়নি।");
       return;
     }
     setError(undefined);
     setLoading(true);
 
-    // Better Auth client দিয়ে ইউজার আপডেট করার সঠিক পদ্ধতি
-    const { error } = await authClient.updateUser({
-      name: trimmed,
-    });
-    
-    setLoading(false);
+    try {
+      const res = await authClient.updateUser({
+        name: trimmed,
+      });
 
-    if (error) {
-      toast.error(authErrorMessage(error) || "নাম আপডেট করতে সমস্যা হয়েছে।");
-      return;
+      setLoading(false);
+
+      if (res?.error) {
+        toast.error(authErrorMessage(res.error) || "নাম আপডেট করতে সমস্যা হয়েছে।");
+        return;
+      }
+
+      // ১. সফল নোটিফিকেশনটি স্ক্রিনে পপ-আপ করবে
+      toast.success("তথ্য সফলভাবে আপডেট হয়েছে!");
+
+      // ২. ব্রাউজার লেভেলে সামান্য সময় নিয়ে রিডাইরেক্ট হবে, যাতে নোটিফিকেশন মিস না হয়
+      setTimeout(() => {
+        window.location.assign("/profile");
+      }, 700);
+
+    } catch (err) {
+      setLoading(false);
+      console.error("Update error:", err);
+      toast.error("কোথাও কোনো ত্রুটি ঘটেছে। আবার চেষ্টা করুন।");
     }
-    
-    toast.success("তথ্য সফলভাবে আপডেট হয়েছে!");
-    router.replace("/profile");
-    router.refresh(); // নববার ও প্রোফাইল পেজ আপডেট করার জন্য
   }
 
   return (

@@ -1,15 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner"; // Sonner ব্যবহার করা হলো যাতে লেআউটের সাথে পারফেক্ট ম্যাচ হয়
 import { signIn } from "@/lib/auth-client";
 import { authErrorMessage, safeRedirect } from "@/lib/auth-errors";
 import FormField from "./FormField";
 import SocialButtons from "./SocialButtons";
 
 export default function SignInForm() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = safeRedirect(searchParams.get("redirect"));
   const fromProtected = searchParams.get("reason") === "protected";
@@ -19,7 +20,7 @@ export default function SignInForm() {
   useEffect(() => {
     if (fromProtected && !toasted.current) {
       toasted.current = true;
-      toast.error("এই পাতাটি দেখতে আগে সাইন ইন করুন।", { id: "protected" });
+      toast.error("এই পাতাটি দেখতে আগে সাইন ইন করুন।");
     }
   }, [fromProtected]);
   
@@ -44,25 +45,31 @@ export default function SignInForm() {
     setLoading(true);
 
     try {
-      // Better Auth সাইন-ইন রিকোয়েস্ট
-      const { data, error } = await signIn.email({
-        email,
-        password,
-        callbackURL: redirectTo,
-      });
+      await signIn.email(
+        {
+          email,
+          password,
+        },
+        {
+          onRequest: () => {
+            setLoading(true);
+          },
+          onSuccess: () => {
+            setLoading(false);
+            
+            // ইনস্ট্যান্ট সাকসেস নোটিফিকেশন (গ্রিন বার বা রিলোড ডিলে ছাড়াই)
+            toast.success("সফলভাবে সাইন ইন হয়েছে!");
 
-      if (error) {
-        setLoading(false);
-        toast.error(authErrorMessage(error) || "সাইন ইন করতে সমস্যা হয়েছে। সঠিক ইমেইল ও পাসওয়ার্ড দিন।");
-        return;
-      }
-
-      toast.success("সফলভাবে সাইন ইন হয়েছে!");
-      
-      // Full page load to ensure cookies are properly recognized
-      setTimeout(() => {
-        window.location.assign(redirectTo || "/");
-      }, 700);
+            // ইনস্ট্যান্ট ক্লায়েন্ট রাউটার পুশ, কোনো ল্যাগ বা এক্সট্রা ওয়েটিং টাইম নেই
+            router.push(redirectTo || "/");
+            router.refresh();
+          },
+          onError: (ctx) => {
+            setLoading(false);
+            toast.error(authErrorMessage(ctx.error) || "সাইন ইন করতে সমস্যা হয়েছে। সঠিক ইমেইল ও পাসওয়ার্ড দিন।");
+          },
+        }
+      );
 
     } catch (err) {
       setLoading(false);

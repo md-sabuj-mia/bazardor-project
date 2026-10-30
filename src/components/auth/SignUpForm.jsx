@@ -30,7 +30,9 @@ export default function SignUpForm() {
     if (confirm !== password) next.confirm = "দুটি পাসওয়ার্ড মেলেনি।";
     setErrors(next);
     if (Object.keys(next).length) {
-      toast.error(Object.values(next)[0]);
+      toast.error(Object.values(next)[0], {
+        position: "top-center",
+      });
       return;
     }
 
@@ -39,12 +41,17 @@ export default function SignUpForm() {
     setLoading(false);
 
     if (error) {
-      toast.error(authErrorMessage(error));
+      toast.error(authErrorMessage(error), {
+        position: "top-center",
+      });
       return;
     }
-    // README: after registering, send the user to the login page (not logged in yet)
+    
+    // সফলভাবে সাইন আপ হওয়ার পর টোস্ট নোটিফিকেশন
     await signOut();
-    toast.success("অ্যাকাউন্ট তৈরি হয়েছে! এখন সাইন ইন করুন।");
+    toast.success("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে! এখন সাইন ইন করুন।", {
+      position: "top-center",
+    });
     router.push("/signin");
     router.refresh();
   }
