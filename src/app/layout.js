@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/navbar/Navbar";
 import "./globals.css";
-import { Toaster } from "sonner";
+import { Toaster } from "react-hot-toast"; // ১. এই লাইনটি ফাইলের সবার উপরে অবশ্যই থাকতে হবে
 import { Suspense } from "react";
 
 const geistSans = Geist({
