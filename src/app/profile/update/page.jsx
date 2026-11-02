@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { requireSession } from "@/lib/session";
 import UpdateNameForm from "@/components/profile/UpdateNameForm";
 import Footer from "@/components/Footer";
+import PriceTicker from "@/components/ticker/PriceTicker"; // ১. PriceTicker কম্পোনেন্ট ইমপোর্ট করা হলো
 import Link from "next/link";
 
 export const metadata = { title: "প্রোফাইল আপডেট — বাজার দর" };
@@ -21,6 +22,9 @@ async function ProfileUpdateContent() {
 export default function ProfileUpdatePage() {
   return (
     <div className="flex min-h-screen flex-col justify-between">
+      {/* ২. প্রাইস টিকার বা স্ক্রোলিং বারটি এখানে যুক্ত করা হলো */}
+      <PriceTicker />
+
       <div className="mx-auto max-w-xl space-y-6 px-4 py-8 flex-1 w-full">
         <header className="space-y-1">
           <h1 className="text-2xl font-bold">প্রোফাইল তথ্য আপডেট</h1>

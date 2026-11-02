@@ -3,6 +3,7 @@ import Link from "next/link";
 import SignOutButton from "@/components/profile/SignOutButton";
 import UserAvatar from "@/components/UserAvatar";
 import Footer from "@/components/Footer"; // Footer import korun
+import PriceTicker from "@/components/ticker/PriceTicker"; // ১. PriceTicker কম্পোনেন্ট ইমপোর্ট করা হলো
 import { requireSession } from "@/lib/session";
 import { toBn } from "@/lib/format";
 
@@ -70,6 +71,9 @@ function ProfileSkeleton() {
 export default function ProfilePage() {
   return (
     <div className="flex min-h-screen flex-col justify-between">
+      {/* ২. প্রাইস টিকার বা স্ক্রোলিং বারটি এখানে যুক্ত করা হলো */}
+      <PriceTicker />
+
       <div className="mx-auto max-w-3xl space-y-6 px-4 py-6 flex-1 w-full">
         <header>
           <h1 className="text-2xl font-bold">আমার প্রোফাইল</h1>
@@ -80,7 +84,7 @@ export default function ProfilePage() {
         </Suspense>
       </div>
 
-      {/* Footer component add kora holo */}
+      {/* Footer component */}
       <Footer />
     </div>
   );

@@ -5,7 +5,8 @@ import { getProductBySlug } from "@/lib/api";
 import { CHANGE_TEXT, ARROW, formatNumberBn, formatPct, perUnitBn, toBn, unitBn } from "@/lib/format";
 import { marketAvg, priceSummary } from "@/lib/products";
 import { requireSession } from "@/lib/session";
-import Footer from "@/components/Footer"; // ফুটার কম্পোনেন্ট ইমপোর্ট করা হলো
+import Footer from "@/components/Footer";
+import PriceTicker from "@/components/ticker/PriceTicker"; // ১. PriceTicker কম্পোনেন্ট ইমপোর্ট করা হলো
 
 function changeLine(p) {
   const diff = p.today - p.yesterday;
@@ -165,13 +166,16 @@ function ProductSkeleton() {
 export default function ProductPage({ params }) {
   return (
     <div className="flex min-h-screen flex-col justify-between">
+      {/* ২. প্রাইস টিকার বা স্ক্রোলিং বারটি এখানে যুক্ত করা হলো যাতে পেজ লোড হলেই এটি দেখায় */}
+      <PriceTicker />
+
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-6 flex-1 w-full">
         <Suspense fallback={<ProductSkeleton />}>
           <ProductContent params={params} />
         </Suspense>
       </div>
       
-      {/* ফুটার কম্পোনেন্ট যুক্ত করা হলো */}
+      {/* ফুটার কম্পোনেন্ট */}
       <Footer />
     </div>
   );

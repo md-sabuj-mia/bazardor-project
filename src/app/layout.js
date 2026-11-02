@@ -32,6 +32,7 @@ export default function RootLayout({ children }) {
         
         {/* টোস্ট পজিশন top-center করে দেওয়া হলো */}
         <Toaster richColors position="top-center" />
+    
         
         <main className="flex-1">{children}</main>
       </body>
