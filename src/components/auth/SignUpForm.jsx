@@ -28,6 +28,11 @@ export default function SignUpForm() {
     else if (!/^\S+@\S+\.\S+$/.test(email)) next.email = "সঠিক ইমেইল ঠিকানা লিখুন।";
     if (password.length < 8) next.password = "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।";
     if (confirm !== password) next.confirm = "দুটি পাসওয়ার্ড মেলেনি।";
+    else if (/[A-Z]/.test(email)) {
+      next.email = "ইমেইলে কোনো বড় হাতের অক্ষর (Capital letter) থাকতে পারবে না।";
+    }
+
+
     setErrors(next);
     if (Object.keys(next).length) {
       toast.error(Object.values(next)[0], {
@@ -49,7 +54,7 @@ export default function SignUpForm() {
     
     // সফলভাবে সাইন আপ হওয়ার পর টোস্ট নোটিফিকেশন
     await signOut();
-    toast.success("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে! এখন সাইন ইন করুন।", {
+    toast.success("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!", {
       position: "top-center",
     });
     router.push("/signin");

@@ -25,11 +25,21 @@ export default function SignInForm() {
     const email = String(form.get("email") ?? "").trim();
     const password = String(form.get("password") ?? "");
 
+    // const next = {};
+    // if (!email) next.email = "ইমেইল লিখুন।";
+    // else if (!/^\S+@\S+\.\S+$/.test(email)) next.email = "সঠিক ইমেইল ঠিকানা লিখুন।";
+    // if (!password) next.password = "পাসওয়ার্ড লিখুন।";
     const next = {};
-    if (!email) next.email = "ইমেইল লিখুন।";
-    else if (!/^\S+@\S+\.\S+$/.test(email)) next.email = "সঠিক ইমেইল ঠিকানা লিখুন।";
-    if (!password) next.password = "পাসওয়ার্ড লিখুন।";
-    
+    if (!email) {
+      next.email = "ইমেইল লিখুন।";
+    } else if (/[A-Z]/.test(email)) {
+      next.email = "ইমেইলে কোনো বড় হাতের অক্ষর (Capital letter) থাকতে পারবে না।";
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      next.email = "সঠিক ইমেইল ঠিকানা লিখুন।";
+    }
+
+
+
     setErrors(next);
     if (Object.keys(next).length) {
       toast.error(Object.values(next)[0], { position: "top-center" });
@@ -53,14 +63,14 @@ export default function SignInForm() {
   return (
     <form onSubmit={onSubmit} noValidate className="flex flex-col gap-4">
       <FormField label="ইমেইল" name="email" type="email" autoComplete="email" placeholder="you@example.com" error={errors.email} />
-      <FormField label="পাসওয়ার্ড" name="password" type="password" autoComplete="current-password" placeholder="••••••••" error={errors.password} />
+      <FormField label="পাসওয়ার্ড" name="password" type="password" autoComplete="current-password" placeholder="পাসওয়ার্ড লিখুন" error={errors.password} />
 
       <button type="submit" disabled={loading} className="btn btn-primary w-full rounded-xl font-semibold mt-2">
         {loading && <span className="loading loading-spinner loading-sm" />}
         সাইন ইন
       </button>
 
-      <div className="divider text-xs text-base-content/50 my-1">অথবা</div>
+      
 
       <SocialButtons callbackURL={callbackUrl} />
 
@@ -73,3 +83,6 @@ export default function SignInForm() {
     </form>
   );
 }
+
+
+

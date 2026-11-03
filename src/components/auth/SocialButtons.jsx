@@ -1,6 +1,3 @@
-
-
-
 "use client";
 
 import { useState } from "react";
@@ -36,30 +33,44 @@ export default function SocialButtons({ callbackURL = "/" }) {
       toast.error(error.message || "সোশ্যাল লগইন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।");
       setLoading(null);
     }
-    // on success the browser is redirected to Google/GitHub, then back to callbackURL
   };
 
   return (
     <>
       <div className="divider my-0 text-xs">অথবা</div>
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        {/* Google Button */}
         <button
           type="button"
           onClick={() => handle("google")}
-          disabled={loading !== null}
-          className="btn btn-outline btn-sm sm:btn-md gap-1.5 whitespace-nowrap rounded-lg border-base-300 px-2 font-semibold"
+          disabled={loading === "google"}
+          className="btn btn-outline btn-sm sm:btn-md relative flex items-center justify-center gap-2 whitespace-nowrap rounded-lg border-base-300 px-2 font-semibold"
         >
-          {loading === "google" ? <span className="loading loading-spinner loading-xs" /> : <GoogleIcon />}
-          Google দিয়ে চালিয়ে যান
+          {loading === "google" ? (
+            <span className="loading loading-spinner loading-sm" />
+          ) : (
+            <>
+              <GoogleIcon />
+              <span>Google দিয়ে চালিয়ে যান</span>
+            </>
+          )}
         </button>
+
+        {/* GitHub Button */}
         <button
           type="button"
           onClick={() => handle("github")}
-          disabled={loading !== null}
-          className="btn btn-outline btn-sm sm:btn-md gap-1.5 whitespace-nowrap rounded-lg border-base-300 px-2 font-semibold"
+           disabled={loading === "github"}
+          className="btn btn-outline btn-sm sm:btn-md relative flex items-center justify-center gap-2 whitespace-nowrap rounded-lg border-base-300 px-2 font-semibold"
         >
-          {loading === "github" ? <span className="loading loading-spinner loading-xs" /> : <GitHubIcon />}
-          GitHub দিয়ে চালিয়ে যান
+          {loading === "github" ? (
+            <span className="loading loading-spinner loading-sm" />
+          ) : (
+            <>
+              <GitHubIcon />
+              <span>GitHub দিয়ে চালিয়ে যান</span>
+            </>
+          )}
         </button>
       </div>
     </>
