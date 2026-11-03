@@ -1,3 +1,5 @@
+
+
 import ProductCard from "@/components/product/ProductCard";
 import { ProductGridSkeleton } from "@/components/product/ProductCardSkeleton";
 import { toBn } from "@/lib/format";
@@ -8,11 +10,11 @@ function SectionShell({ subtitle, children }) {
   return (
     // scroll-mt keeps the heading visible below the sticky navbar when the hero CTA jumps here
     <section id={ALL_PRODUCTS_ID} aria-labelledby="all-products-title" className="scroll-mt-36 space-y-3">
-      <h2 id="all-products-title" className="text-xl font-bold">
+      <h2 id="all-products-title" className="text-xl sm:text-2xl font-bold">
         সব পণ্য
       </h2>
       <div className="space-y-4">
-        <p className="text-sm text-base-content/70">{subtitle}</p>
+        <p className="text-xs sm:text-sm text-base-content/70">{subtitle}</p>
         {children}
       </div>
     </section>

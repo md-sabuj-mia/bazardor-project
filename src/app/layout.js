@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/navbar/Navbar";
 import "./globals.css";
-import { Toaster } from "react-hot-toast"; // ১. এই লাইনটি ফাইলের সবার উপরে অবশ্যই থাকতে হবে
+import { Toaster } from "react-hot-toast";
 import { Suspense } from "react";
 
 const geistSans = Geist({
@@ -25,16 +25,18 @@ export default function RootLayout({ children }) {
       lang="bn"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <Suspense fallback={<div className="h-16 bg-emerald-900 animate-pulse" />}>
+      <body className="min-h-full flex flex-col bg-base-100 text-base-content">
+        <Suspense fallback={<div className="h-16 bg-base-200 animate-pulse" />}>
           <Navbar />
         </Suspense>
         
-        {/* টোস্ট পজিশন top-center করে দেওয়া হলো */}
-        <Toaster richColors position="top-center" />
-    
+        {/* টোস্ট পজিশন top-center */}
+        <Toaster position="top-center" />
         
-        <main className="flex-1">{children}</main>
+        {/* রেসপন্সিভ কন্টেইনার ও ম্যাক্স উইডথ max-w-6xl যুক্ত করা হলো */}
+        <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+          {children}
+        </main>
       </body>
     </html>
   );

@@ -46,7 +46,7 @@ export default function Home() {
       <PriceTicker />
 
       {/* মূল হোম পেজের কন্টেন্ট */}
-      <div className="mx-auto max-w-6xl space-y-10 px-4 py-6 flex-grow">
+      <div className="mx-auto max-w-6xl space-y-10 px-4 py-6 flex-grow w-full">
         <Hero />
         <Suspense fallback={<MoversSkeleton />}>
           <MoversSections />
@@ -56,18 +56,18 @@ export default function Home() {
         </Suspense>
       </div>
 
-      {/* প্রফেশনাল ফুটার */}
-      <footer className="w-full bg-gray-50 border-t border-gray-200 mt-auto py-6 text-sm text-gray-600">
+      {/* প্রফেশনাল ফুটার (থিম-কম্প্যাটিবল) */}
+      <footer className="w-full bg-base-200/50 border-t border-base-300 mt-auto py-6 text-sm text-base-content/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           
           {/* বাম পাশের টেক্সট */}
           <div>
-            <p className="font-medium text-gray-700">বাজার দর — প্রয়োজনীয় পণ্যের দাম এক নজরে</p>
+            <p className="font-medium text-base-content">বাজার দর — প্রয়োজনীয় পণ্যের দাম এক নজরে</p>
           </div>
           
           {/* ডান পাশের টেক্সট */}
           <div>
-            <p className="text-gray-500 text-xs sm:text-sm">সকল দাম সম্ভাব্য; বাজার অবস্থার ওপর নির্ভর করে পরিবর্তিত হয়।</p>
+            <p className="text-xs sm:text-sm text-base-content/60">সকল দাম সম্ভাব্য; বাজার অবস্থার ওপর নির্ভর করে পরিবর্তিত হয়।</p>
           </div>
 
         </div>

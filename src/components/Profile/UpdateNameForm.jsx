@@ -1,3 +1,6 @@
+
+
+
 "use client";
 
 import Link from "next/link";
@@ -66,7 +69,7 @@ export default function UpdateNameForm({ currentName }) {
         error={error}
       />
       <div className="flex flex-col-reverse gap-2 sm:flex-row">
-        <Link href="/profile" className="btn btn-ghost btn-sm sm:btn-md rounded-lg sm:flex-1">
+        <Link href="/profile" className="btn btn-ghost btn-sm sm:btn-md rounded-lg sm:flex-1 justify-center">
           বাতিল
         </Link>
         <button type="submit" disabled={loading} className="btn btn-primary btn-sm sm:btn-md rounded-lg font-semibold sm:flex-[2]">

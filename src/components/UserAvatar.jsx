@@ -1,3 +1,6 @@
+
+
+
 import Image from "next/image";
 
 /** User photo, or the first letter of their name on a green tile. */

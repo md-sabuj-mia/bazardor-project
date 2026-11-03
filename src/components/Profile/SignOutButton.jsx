@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -20,7 +22,7 @@ export default function SignOutButton() {
         router.push("/");
         router.refresh();
       }}
-      className="btn btn-outline btn-error btn-sm sm:btn-md rounded-lg font-semibold"
+      className="btn btn-outline btn-error btn-sm sm:btn-md rounded-lg font-semibold w-full sm:w-auto"
     >
       {loading ? <span className="loading loading-spinner loading-xs" /> : <span aria-hidden>↩</span>}
       সাইন আউট

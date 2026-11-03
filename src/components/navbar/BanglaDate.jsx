@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import { useSyncExternalStore } from "react";
@@ -12,8 +14,9 @@ export default function BanglaDate({ className }) {
     () => formatBnDate(),
     () => "" // server render: empty, filled in after hydration
   );
+
   return (
-    <span className={className} suppressHydrationWarning>
+    <span className={className || ""} suppressHydrationWarning>
       {date || " "}
     </span>
   );

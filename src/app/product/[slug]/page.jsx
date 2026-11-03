@@ -166,7 +166,7 @@ function ProductSkeleton() {
 export default function ProductPage({ params }) {
   return (
     <div className="flex min-h-screen flex-col justify-between">
-      {/* ২. প্রাইস টিকার বা স্ক্রোলিং বারটি এখানে যুক্ত করা হলো যাতে পেজ লোড হলেই এটি দেখায় */}
+      {/* ২. প্রাইস টেকার বা স্ক্রোলিং বারটি এখানে যুক্ত করা হলো যাতে পেজ লোড হলেই এটি দেখায় */}
       <PriceTicker />
 
       <div className="mx-auto max-w-6xl space-y-6 px-4 py-6 flex-1 w-full">

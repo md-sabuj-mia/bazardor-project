@@ -1,16 +1,18 @@
+
+
 import Link from "next/link";
 import { getProducts } from "@/lib/api";
 import { CHANGE_TEXT, formatChange, formatNumberBn, unitBn } from "@/lib/format";
 
 function TickerItems({ products, hidden = false }) {
   return (
-    <ul className="flex shrink-0" aria-hidden={hidden || undefined}>
+    <ul className="flex shrink-0 items-center" aria-hidden={hidden || undefined}>
       {products.map((p) => (
         <li key={p.id} className="shrink-0 border-r border-base-200">
           <Link
             href={`/product/${p.slug}`}
             tabIndex={hidden ? -1 : undefined}
-            className="flex h-9 items-center gap-1.5 whitespace-nowrap pl-4 pr-[17px] text-sm hover:bg-base-200"
+            className="flex h-9 items-center gap-1.5 whitespace-nowrap pl-4 pr-[17px] text-xs sm:text-sm hover:bg-base-200 transition-colors"
           >
             <span aria-hidden>{p.image}</span>
             <span className="font-medium">{p.nameBn}</span>

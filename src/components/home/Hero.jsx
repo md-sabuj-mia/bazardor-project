@@ -1,9 +1,11 @@
+
+
 import Image from "next/image";
 import BanglaDate from "@/components/navbar/BanglaDate";
 
 export default function Hero() {
   return (
-    <section className="rounded-3xl border border-base-300 bg-base-100">
+    <section className="rounded-3xl border border-base-300 bg-base-100 overflow-hidden">
       <div className="flex flex-col-reverse items-center gap-6 px-4 py-8 sm:px-6 md:flex-row md:items-center md:justify-between md:py-10 lg:px-8">
         <div className="flex w-full max-w-xl flex-col items-start gap-2 text-left">
           {/* eyebrow */}

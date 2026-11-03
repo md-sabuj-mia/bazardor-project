@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { requireSession } from "@/lib/session";
 import UpdateNameForm from "@/components/profile/UpdateNameForm";
 import Footer from "@/components/Footer";
-import PriceTicker from "@/components/ticker/PriceTicker"; // ১. PriceTicker কম্পোনেন্ট ইমপোর্ট করা হলো
+import PriceTicker from "@/components/ticker/PriceTicker";
 import Link from "next/link";
 
 export const metadata = { title: "প্রোফাইল আপডেট — বাজার দর" };
@@ -22,13 +22,13 @@ async function ProfileUpdateContent() {
 export default function ProfileUpdatePage() {
   return (
     <div className="flex min-h-screen flex-col justify-between">
-      {/* ২. প্রাইস টিকার বা স্ক্রোলিং বারটি এখানে যুক্ত করা হলো */}
+      {/* প্রাইস টিকার বা স্ক্রোলিং বার */}
       <PriceTicker />
 
       <div className="mx-auto max-w-xl space-y-6 px-4 py-8 flex-1 w-full">
         <header className="space-y-1">
-          <h1 className="text-2xl font-bold">প্রোফাইল তথ্য আপডেট</h1>
-          <p className="text-sm text-base-content/70">আপনার নাম পরিবর্তন করুন।</p>
+          <h1 className="text-2xl sm:text-3xl font-bold">প্রোফাইল তথ্য আপডেট</h1>
+          <p className="text-xs sm:text-sm text-base-content/70">আপনার নাম পরিবর্তন করুন।</p>
         </header>
 
         {/* Next.js এর সাজেস্ট করা 'Stream' পদ্ধতি: Suspense দিয়ে কুকি/সেশন কল র‍্যাপ করা হলো */}
